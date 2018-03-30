@@ -1,0 +1,56 @@
+
+
+# API 文档
+{% for groupItem in dump.item   %}
+
+####  {{ groupItem.name }}
+{% set topIndex = loop.index  %}
+{% for item in groupItem.item  %}
+##### {{  item.name }}
+接口描述： {{ item.request.description }}
+
+接口地址：
+{% set apiUrl = item.response[0].originalRequest.url.raw ? item.response[0].originalRequest.url.raw :item.response[0].originalRequest.url %}
+
+```
+{{ item.request.method }} {{ apiUrl | urlFormat   }}
+```
+
+
+{% if item.request.url.query | length > 1 or item.request.body.urlencoded | length >0  %}
+参数 | 必填 | 简介
+---- | ---- | -----
+{% for r in item.request.url.query if r.key != 'access_token' %}
+{{r.key  }} |  {{ r.description | paramDescriptionFormat  }}
+{% endfor %}
+{% for r in item.request.body.urlencoded %}
+{{ r.key }} | {{ r.description | paramDescriptionFormat  }}
+{% endfor %}
+{% endif %}
+
+请求示例:
+{% set paramLength =  item.response[0].originalRequest.body.urlencoded  | length  %}
+```
+curl -X{{ item.request.method }} {{ apiUrl | urlFormat }}{% if item.request.method == 'POST' %}\  -d "{%  for param in item.response[0].originalRequest.body.urlencoded  %}{{ param.key }}={{ param.value }}{% if loop.index< paramLength  %}&{% endif %}{% endfor %}" {% endif %}
+
+```
+
+响应示例:
+
+```
+{{ item.response[0].body | raw | jsonFormat | raw }}
+```
+{% endfor %}
+{% endfor %}
+
+
+#### 错误码说明
+
+错误码 | 说明
+----- | ----
+10001 | 参数不合法
+10002 | 数据不存在
+10003 | 数据已经存在
+10004 | 数据不合法
+10005 | 登录失败
+10006 | 权限不足
