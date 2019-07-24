@@ -28,7 +28,8 @@ $twig = new Twig_Environment($loader, [
 $twig->addExtension(new Twig_Extension_Debug());
 $filter = new Twig_SimpleFilter('jsonFormat', function ($string) {
     return json_encode(json_decode($string, true), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-});
+})
+;
 $twig->addFilter($filter);
 
 //-- 请求url 处理
@@ -67,23 +68,16 @@ $filter = new Twig_SimpleFilter('tableFormat', function($string){
 
 $twig->addFilter($filter);
 
-
-
 $text =  $twig->render('cmstop.twig',array('dump'=>$dump));
 
 if($output == 'markdown') {
     exit($text);
 }
 
-
 //-- markdwon 渲染
 $parseDown = new Parsedown();
-
 $parsedText = $parseDown->text($text);
-
-
-
-echo   $twig->render('layouts/1.twig',  [
+echo   $twig->render('layouts/bootstrap.twig',  [
    'markdown'=>$parsedText
 ]);
 

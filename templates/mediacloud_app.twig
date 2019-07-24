@@ -1,0 +1,13 @@
+{% extends "layouts/bootstrap.twig" %}
+
+{% block main %}
+    <table class="table table-bordered">
+        <tr><th>应用名称</th> <th>应用别名</th> <th>基础应用</th> <th>是否是Jian应用</th></tr>
+    {% for app in data %}
+        <tr><td>{{ app.alias }}</td><td>{{ app.name }}</td> <td>{% if app.description == 1 %} 否 {% else %} 是 {% endif %}</td><td>{% if app.id > 10000 %}是{% else %}否{% endif %}</td></tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+
+

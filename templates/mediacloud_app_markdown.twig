@@ -1,0 +1,8 @@
+应用id | 应用名称 | 应用别名 | 基础应用 | Jian应用
+----- | ------- | ------- | -------- | ------
+{% for app in data %}
+{{ app.id }}| {{ app.alias }} | {{ app.name }} | {% if app.description == 1 %} 否 {% else %} 是 {% endif %} |{% if app.id > 10000 %}是{% else %}否{% endif %} |
+{% endfor %}
+
+
+
