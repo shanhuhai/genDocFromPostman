@@ -9,14 +9,14 @@ require './vendor/autoload.php';
 
 $output  = isset($_GET['output']) ? $_GET['output'] : 'html' ;
 
+$config = require 'config.php';
 // 载入 postman 导出文件
-$dump = file_get_contents('/Users/shanhuhai/Documents/ums.postman_collection');
+$dump = file_get_contents($config['postman_json']);
 
 if($output == 'json') {
     echo  $dump;
     exit();
 }
-
 $dump = json_decode($dump, true);
 
 $loader = new Twig_Loader_Filesystem('./templates');

@@ -1,3 +1,4 @@
 .idea
 outputs
 vendor
+config.php
