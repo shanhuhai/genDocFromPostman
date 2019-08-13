@@ -14,7 +14,7 @@ return [
 
 2. 通过 `php -S 127.0.0.1:8001` 启动 php 服务器
 
-- 请求  http://127.0.0.1:8001/?output=markdown ，则会输出 Markdown 版本的接口文档， 另外为Markdown文件
+- 请求  http://127.0.0.1:8001/?output=markdown ，则会输出 Markdown 版本的接口文档， 另存为Markdown文件
 - 请求  http://127.0.0.1:8001/?output=json， 输出postman的json 源内容
 
 3. postman 填写规则
