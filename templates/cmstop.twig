@@ -1,19 +1,17 @@
-
-
-# API 文档
+# 接口
 {% for groupItem in dump.item   %}
 
-####  {{ groupItem.name }}
+##  {{ groupItem.name }}
 {% set topIndex = loop.index  %}
 {% for item in groupItem.item  %}
-##### {{  item.name }}
+### {{  item.name }}
 接口描述： {{ item.request.description }}
 
 接口地址：
 {% set apiUrl = item.response[0].originalRequest.url.raw ? item.response[0].originalRequest.url.raw :item.response[0].originalRequest.url %}
 
 ```
-{{ item.request.method }} {{ apiUrl | urlFormat   }}
+{{ item.request.method }} {{ apiUrl | raw  }}
 ```
 
 
@@ -31,7 +29,7 @@
 请求示例:
 {% set paramLength =  item.response[0].originalRequest.body.urlencoded  | length  %}
 ```
-curl -X{{ item.request.method }} {{ apiUrl | urlFormat }}{% if item.request.method == 'POST' %}\  -d "{%  for param in item.response[0].originalRequest.body.urlencoded  %}{{ param.key }}={{ param.value }}{% if loop.index< paramLength  %}&{% endif %}{% endfor %}" {% endif %}
+curl -X{{ item.request.method }} {{ apiUrl | raw }}{% if item.request.method == 'POST' %}\  -d "{%  for param in item.response[0].originalRequest.body.urlencoded  %}{{ param.key }}={{ param.value | valueFormat}}{% if loop.index< paramLength  %}&{% endif %}{% endfor %}" {% endif %}
 
 ```
 
@@ -44,13 +42,7 @@ curl -X{{ item.request.method }} {{ apiUrl | urlFormat }}{% if item.request.meth
 {% endfor %}
 
 
-#### 错误码说明
+## 错误码说明
 
 错误码 | 说明
 ----- | ----
-10001 | 参数不合法
-10002 | 数据不存在
-10003 | 数据已经存在
-10004 | 数据不合法
-10005 | 登录失败
-10006 | 权限不足

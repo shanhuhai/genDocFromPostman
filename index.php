@@ -56,6 +56,14 @@ $filter = new Twig_SimpleFilter('paramDescriptionFormat', function($string){
 
 $twig->addFilter($filter);
 
+
+$twig->addFilter(new Twig_SimpleFilter('valueFormat', function ($value) {
+    if (is_array($value)) {
+        return implode(',', $value);
+    }
+    return $value;
+}));
+
 //-- 表格美化
 $filter = new Twig_SimpleFilter('tableFormat', function($string){
     $string = str_replace('<table', '<table class="table"', $string);
